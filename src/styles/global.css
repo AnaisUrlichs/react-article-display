@@ -1,0 +1,98 @@
+* {
+    font-family:Georgia, Arial, Helvetica, Sans-serif,serif;
+    background-color: #ffffff;
+    max-width: 1200px;
+    margin: auto auto;
+}
+
+.divider {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.title {
+    text-align: center;
+    margin: 24px;
+}
+
+.list, .header {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-areas: "a a a b c d e f";
+    row-gap: 32px;
+    text-align: center;
+    margin: 8px;
+    line-height: 16px;
+    font-size: 16px;
+    align-self: center;
+    min-height: 40px;
+}
+
+.header {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.url {
+    grid-area: a;
+    text-align: left;
+    align-self: center;
+}
+
+.author {
+    grid-area: b;
+    text-align: left;
+    align-self: center;
+}
+
+.date {
+    grid-area: c;
+    align-self: center;
+}
+
+.comments {
+    grid-area: d;
+    align-self: center;
+}
+
+.points {
+    grid-area: e;
+    align-self: center;
+}
+
+.delete, .submit {
+    grid-area: f;
+   background-color:  #4d94ff;
+   color: #ffffff;
+   height: 32px;
+   border: none;
+   border-radius: 5px;
+   margin: auto auto;
+   margin-top: 0;
+}
+
+.delete:hover, .submit:hover {
+    cursor: pointer;
+}
+
+.submit {
+    margin-left: 24px;
+    width: 80px;
+    height: 40px;
+    width: 120px;
+    font-size: 24px;
+}
+
+input {
+    background-color: #f2f2f2;
+    height: 40px;
+    width: 280px;
+    font-size: 24px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 12px;
+}
+
+.search {
+    font-size: 24px;
+}

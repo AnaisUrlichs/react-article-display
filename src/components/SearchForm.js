@@ -13,10 +13,10 @@ const SearchForm = ({
         isFocused
         onInputChange={onSearchInput}
       >
-        <strong>Search:</strong>
+        <strong  className="search">Search:</strong>
       </InputWithLabel>
   
-      <button type="submit" disabled={!searchTerm}>
+      <button type="submit" disabled={!searchTerm} className="submit">
         Submit
       </button>
     </form>

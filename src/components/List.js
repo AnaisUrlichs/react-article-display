@@ -4,11 +4,13 @@ import Item from './Item'
 
 const List = ({ list, onRemoveItem }) =>
   list.map(item => (
-    <Item
-      key={item.objectID}
-      item={item}
-      onRemoveItem={onRemoveItem}
-    />
+    <div>
+      <Item
+        key={item.objectID}
+        item={item}
+        onRemoveItem={onRemoveItem}
+      />
+    </div>
   ));
 
 

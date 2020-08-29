@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import List from './components/List'
 import SearchForm from './components/SearchForm'
+import './styles/global.css'
 
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query='
 
@@ -53,7 +54,7 @@ const storiesReducer = (state, action) => {
 const App = () => {
   const [searchTerm, setSearchTerm] = useSemiPersistentState(
     'search',
-    'React'
+    'Kubernetes Helm'
   )
 
   const [url, setUrl] = React.useState(
@@ -103,7 +104,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>My Hacker Stories</h1>
+      <h1 className="title">Let's learn about Helm</h1>
 
       <SearchForm
         searchTerm={searchTerm}
@@ -111,14 +112,25 @@ const App = () => {
         onSearchSubmit={handleSearchSubmit}
       />
 
-      <hr />
+      <hr className="divider"/>
 
       {stories.isError && <p>Something went wrong ...</p>}
 
+      <div className="header">
+        <p className="url">Title</p>
+        <p className="author">Author</p>
+        <p className="date">Date</p>
+        <p className="comments">Comments</p>
+        <p className="points">Points</p>
+        <p className="button">Delete</p>
+      </div>
+
       {stories.isLoading ? (
-        <p>Loading ...</p>
+        <p className="loading">Loading ...</p>
       ) : (
-        <List list={stories.data} onRemoveItem={handleRemoveStory} />
+        <div className="display">
+          <List list={stories.data} onRemoveItem={handleRemoveStory} />
+        </div>
       )}
     </div>
   )
