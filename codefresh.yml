@@ -1,0 +1,30 @@
+version: '1.0'
+stages:
+  - prepare
+  - test
+  - build
+steps:
+  main_clone:
+    title: Cloning main repository...
+    stage: prepare
+    type: git-clone
+    repo: 'react-article-display'
+    revision: master
+    git: github
+  MyUnitTests:
+    title: Unit test
+    stage: test
+    image: node:8.16
+    commands:
+      - yarn install
+      - yarn test
+    environment:
+      - CI=true
+  MyAppDockerImage:
+    title: Building Docker Image
+    type: build
+    stage: build
+    image_name: react-article-display
+    working_directory: ./
+    tag: 'with-nginx'
+    dockerfile: Dockerfile
