@@ -28,3 +28,11 @@ steps:
     working_directory: ./
     tag: 'with-nginx'
     dockerfile: Dockerfile
+  push_to_my_registry:
+    stage: 'push'
+    type: push
+    title: Pushing to a registry
+    candidate: ${{build_my_app}}
+    tag: 'v1.0.0'
+    registry: dockerhub
+    image_name: anaisurlichs/react-article-display
