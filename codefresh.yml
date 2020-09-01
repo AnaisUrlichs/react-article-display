@@ -28,3 +28,8 @@ steps:
     working_directory: ./
     tag: 'with-nginx'
     dockerfile: Dockerfile
+  PushToDockerRegistry:
+    type: push
+    candidate: '${{BuildImage}}'
+    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
+    registry: 'docker-account'
