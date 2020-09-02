@@ -4,7 +4,7 @@ stages:
   - "clone"
   - "build"
   - "test"
-  - "store"
+  - "deploy"
   
 steps:
   clone:
@@ -19,25 +19,27 @@ steps:
     title: "Building Docker image"
     type: "build"
     image_name: "anaisurlichs/react-article-display"
-    working_directory: "${{clone}}"
+    working_directory: "./react-article-display"
     tag: "${{CF_BRANCH_TAG_NORMALIZED}}"
     dockerfile: "Dockerfile"
     stage: "build"
 
   test:
     title: "Running test"
-    type: "freestyle"
-    image: "ubuntu:latest"
-    working_directory: "${{clone}}"
+    type: "freestyle" # Run any command
+    image: "ubuntu:latest" # The image in which command will be executed
+    working_directory: "./react-article-display" # Running command where code cloned
     commands:
       - "ls"
     stage: "test"
 
   deploy:
     type: "helm"
+    working_directory: "./react-article-display"
     arguments:
       action: "install"
-      chart_name: "charts"
+      chart_name: "charts/hook-example"
       release_name: "first"
-      helm_version: 3.0.1
+      helm_version: 3.0.2
       kube_context: "digitalOcean@k8s-1-18-6-do-0-fra1-1598889669983"
+    stage: "deploy"

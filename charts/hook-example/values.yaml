@@ -5,7 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: anaisurlichs/react-article-display
+  tag: master
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -32,8 +33,11 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
-
+  name: react-article-display
+  type: LoadBalancer
+  externalPort: 80
+  internalPort: 8080
+  
 ingress:
   enabled: false
   annotations: {}
