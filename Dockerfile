@@ -16,12 +16,6 @@ COPY . ./
 
 # Installs all node packages
 RUN npm run build
- 
-# # Uses port which is used by the actual application
-# EXPOSE 3000
- 
-# # Runs the application
-# CMD [ "npm", "start" ]
 
 # the base image for this is an alpine based nginx image
 FROM nginx:latest
@@ -30,7 +24,7 @@ FROM nginx:latest
 COPY --from=build-deps /app/public /usr/share/nginx/html
 
 # expose port 80 to the outer world
-EXPOSE 3000
+EXPOSE 80
 
 # start nginx 
 CMD ["nginx", "-g", "daemon off;"]

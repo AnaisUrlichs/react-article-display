@@ -1,4 +1,4 @@
-# Default values for charts.
+# Default values for hook-chart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -33,11 +33,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  name: react-article-display
-  type: LoadBalancer
-  externalPort: 80
-  internalPort: 8080
-  
+  port: 80
+
 ingress:
   enabled: false
   annotations: {}
