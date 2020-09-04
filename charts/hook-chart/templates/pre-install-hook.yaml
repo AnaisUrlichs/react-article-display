@@ -25,4 +25,4 @@ spec:
       containers:
       - name: pre-install-job
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        command: ["/bin/sleep","{{ default "10" .Values.sleepyTime }}"]
+        command: ['sh', '-c', 'echo pre-install Job Pod is Running ; sleep 2']
