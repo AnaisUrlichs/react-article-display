@@ -1,10 +1,10 @@
 # Pull official base image
-FROM node:latest as build-deps
+FROM node:14.9.0 as build-deps
 
 # A directory within the virtualized Docker environment
 # Becomes more relevant when using Docker Compose later
-WORKDIR /app
- 
+WORKDIR /usr/src/app
+
 # Copies package.json and package-lock.json to Docker environment
 COPY package.json yarn.lock ./
  
@@ -18,10 +18,10 @@ COPY . ./
 RUN npm run build
 
 # the base image for this is an alpine based nginx image
-FROM nginx:latest
+FROM nginx:1.19-alpine
 
 # copy the build folder from react to the root of nginx (www)
-COPY --from=build-deps /app/public /usr/share/nginx/html
+COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 
 # expose port 80 to the outer world
 EXPOSE 80
