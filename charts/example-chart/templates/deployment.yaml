@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "hook-chart.fullname" . }}
+  name: {{ include "example-chart.fullname" . }}
   labels:
-    {{- include "hook-chart.labels" . | nindent 4 }}
+    {{- include "example-chart.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "hook-chart.selectorLabels" . | nindent 6 }}
+      {{- include "example-chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "hook-chart.selectorLabels" . | nindent 8 }}
+        {{- include "example-chart.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      serviceAccountName: {{ include "hook-chart.serviceAccountName" . }}
+      serviceAccountName: {{ include "example-chart.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
