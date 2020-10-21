@@ -39,7 +39,7 @@ steps:
     arguments:
       action: "install"
       chart_name: "charts/example-chart"
-      release_name: "first"
+      release_name: "example-chart"
       helm_version: 3.0.2
       kube_context: "anais-cluster@codefresh-sa"
     stage: "deploy"
