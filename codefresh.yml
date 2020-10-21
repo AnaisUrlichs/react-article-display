@@ -10,7 +10,7 @@ steps:
   clone:
     title: "Cloning repository"
     type: "git-clone"
-    repo: "AnaisUrlichs/react-article-display"
+    repo: "anais-codefresh/react-article-display"
     revision: "${{CF_BRANCH}}"
     git: "github"
     stage: "clone"
@@ -38,8 +38,8 @@ steps:
     working_directory: "./react-article-display"
     arguments:
       action: "install"
-      chart_name: "charts/hook-chart"
+      chart_name: "charts/example-chart"
       release_name: "first"
       helm_version: 3.0.2
-      kube_context: "digitalOcean@k8s-1-18-6-do-0-fra1-1598889669983"
+      kube_context: "anais-cluster@codefresh-sa"
     stage: "deploy"
