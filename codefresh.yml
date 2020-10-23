@@ -24,15 +24,6 @@ steps:
     dockerfile: "Dockerfile"
     stage: "build"
 
-  test:
-    title: "Running test"
-    type: "freestyle" # Run any command
-    image: "ubuntu:latest" # The image in which command will be executed
-    working_directory: "./react-article-display" # Running command where code cloned
-    commands:
-      - "ls"
-    stage: "test"
-
   deploy:
     type: "helm"
     working_directory: "./react-article-display"
