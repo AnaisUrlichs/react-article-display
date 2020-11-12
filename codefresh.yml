@@ -29,7 +29,7 @@ steps:
     arguments:
       action: "install"
       chart_name: "charts/example-chart"
-      release_name: "example-chart"
+      release_name: "hook-chart"
       helm_version: 3.0.2
       kube_context: "anais-cluster@codefresh-sa"
     stage: "deploy"
