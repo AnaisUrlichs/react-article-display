@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: anaisurlichs/react-article-display
+  repository: anaisurlichs/article-display
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
