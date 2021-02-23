@@ -1,0 +1,17 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: knative-react
+  namespace: default
+spec:
+  template:
+    metadata:
+      name: knative-react-v1
+    spec:
+      containers:
+        - image: docker.io/anaisurlichs/knative-demo:1.0.0
+          ports:
+          - containerPort: 80
+          env:
+            - name: TARGET
+              value: "Knative React v1"
