@@ -9,9 +9,10 @@ spec:
       name: knative-react-v1
     spec:
       containers:
-        - image: docker.io/anaisurlichs/knative-demo:1.0.0
+        - image: docker.io/anaisurlichs/knative-demo:latest
           ports:
           - containerPort: 80
+          imagePullPolicy: Always
           env:
             - name: TARGET
               value: "Knative React v1"
