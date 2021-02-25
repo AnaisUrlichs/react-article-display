@@ -104,7 +104,7 @@ const App = () => {
 
   return (
     <div>
-      <h1 className="title">Let's learn about Kubernetes and GitOps!</h1>
+      <h1 className="title">Let's learn about Kubernetes, Knative and GitOps</h1>
 
       <SearchForm
         searchTerm={searchTerm}
