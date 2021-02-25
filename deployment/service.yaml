@@ -1,12 +1,12 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: knative-react-demo
+  name: knative-react
   namespace: default
 spec:
   template:
     metadata:
-      name: knative-react-demo-v2
+      name: knative-react-v1
     spec:
       containers:
         - image: docker.io/anaisurlichs/knative-demo:latest
@@ -15,4 +15,4 @@ spec:
           imagePullPolicy: Always
           env:
             - name: TARGET
-              value: "Knative React Demo v2"
+              value: "Knative React v1"
