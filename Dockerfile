@@ -18,7 +18,7 @@ COPY . ./
 RUN npm run build
 
 # the base image for this is an alpine based nginx image
-FROM nginx:1.19-alpine
+FROM nginx:1.20.1-alpine
 
 # copy the build folder from react to the root of nginx (www)
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
