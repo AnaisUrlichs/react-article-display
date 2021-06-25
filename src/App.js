@@ -18,6 +18,7 @@ const useSemiPersistentState = (key, initialState) => {
   return [value, setValue]
 };
 
+
 const storiesReducer = (state, action) => {
   switch (action.type) {
     case 'STORIES_FETCH_INIT':
