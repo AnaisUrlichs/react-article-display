@@ -1,4 +1,4 @@
-{{- if .Values.ingress.enabled -}}
+{{{- if .Values.ingress.enabled -}}
 {{- $fullName := include "example-chart.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -38,4 +38,4 @@ spec:
               servicePort: {{ $svcPort }}
         {{- end }}
   {{- end }}
-{{- end }}
+{{- end }}}
