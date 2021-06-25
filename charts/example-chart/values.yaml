@@ -5,7 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: manojsaikumar/react-example-app
+  repository: manojsaikumar/react-article-display
+  tag: latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
