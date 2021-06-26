@@ -1,4 +1,4 @@
-name: Deploy
+name: ci
 
 on:
   push:
@@ -25,6 +25,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: manojsaikumar/react-article-display
+          tags: manojsaikumar/react-article-display:latest
         env:
           GITHUB_TOKEN: ${{secrets.GITHUBTOKEN}}
