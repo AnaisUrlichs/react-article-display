@@ -8,23 +8,23 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "example-chart.selectorLabels" . | nindent 6 }}
+      {{ include "example-chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "example-chart.selectorLabels" . | nindent 8 }}
+        {{ include "example-chart.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
+    {{ with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{ toYaml . | nindent 8 }}
+    {{ end }}
       serviceAccountName: {{ include "example-chart.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{ toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{ toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -40,16 +40,16 @@ spec:
               path: /
               port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{ toYaml .Values.resources | nindent 12 }}
+      {{ with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.affinity }}
+        {{ toYaml . | nindent 8 }}
+      {{ end }}
+    {{ with .Values.affinity }}
       affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
+        {{ toYaml . | nindent 8 }}
+    {{ end }}
+    {{ with .Values.tolerations }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{ toYaml . | nindent 8 }}
+    {{ end }}
