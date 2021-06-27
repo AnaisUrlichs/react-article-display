@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: manojsaikumar/react-article-display
-  tag: latest
+  tag: 6
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
