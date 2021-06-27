@@ -25,6 +25,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: manojsaikumar/react-article-display:${{ env.DOCKER_TAG }}
+          tags: manojsaikumar/react-article-display:latest
         env:
           GITHUB_TOKEN: ${{secrets.GITHUBTOKEN}}
