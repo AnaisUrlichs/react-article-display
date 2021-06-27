@@ -3,6 +3,9 @@ name: ci
 on:
   push:
     branches: master
+env:
+  DOCKER_TAG: |
+     ${{ github.event.head.sha }}   
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,6 +28,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: manojsaikumar/react-article-display:7
+          tags: manojsaikumar/react-article-display:${{ env.DOCKER_TAG }}
         env:
           GITHUB_TOKEN: ${{secrets.GITHUBTOKEN}}
