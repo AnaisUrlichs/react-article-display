@@ -5,7 +5,7 @@ on:
     branches: master
 env:
   DOCKER_TAG: |
-     ${{ github.event.head.sha }}   
+     ${{ github.event.push.head.sha }}   
 jobs:
   deploy:
     runs-on: ubuntu-latest
