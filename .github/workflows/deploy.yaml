@@ -3,6 +3,9 @@ name: ci
 on:
   push:
     branches: master 
+  env:
+  DOCKER_TAG: |
+    ${{ github.event.head.ref }}-${{ github.event.head.sha }}  
 jobs:
   deploy:
     runs-on: ubuntu-latest
