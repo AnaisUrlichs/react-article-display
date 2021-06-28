@@ -1,11 +1,11 @@
 name: ci
 
 on:
-  push:
+  pull_request:
     branches: master 
 env:
   DOCKER_TAG: |
-    ${{ github.event.head.ref }}-${{ github.event.head.sha }}  
+    ${{ github.event.pull_request.head.ref }}-${{ github.event.pull_request.head.sha }}  
 jobs:
   deploy:
     runs-on: ubuntu-latest
