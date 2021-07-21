@@ -28,4 +28,4 @@ deploy:
     - kubectl config set-context default --cluster=example-cluster --user=gitlab
     - kubectl config use-context default
     - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" manifests/deployment.yaml
-    - kubectl apply -f deployment.yaml
+    - kubectl apply -f manifests/deployment.yaml
