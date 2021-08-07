@@ -21,7 +21,7 @@ jobs:
         context: ./
         file: ./Dockerfile
         push: true
-        tags: anaisurlichs/react-example-app:$GITHUB_SHA
+        tags: anaisurlichs/react-example-app:${{ github.sha }}
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
   deploy:
