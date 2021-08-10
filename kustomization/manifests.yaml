@@ -17,6 +17,13 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    app.komodor.com/app: https://github.com/AnaisUrlichs/react-article-display/
+    app.komodor.com/app.ref: 3350e3311f9520fe5e237e2d71f339029ee051d8
+    app.komodor.com/infra: https://github.com/komodorio/helm-charts
+    app.komodor.com/infra.ref: 32b355df32713afc511528d909eff296e91dbe74
+    app.komodor.com/notification.alert.slack: '#p1-health-issues'
+    app.komodor.com/notification.deploy.slack: '#deploy'
   name: react-application
 spec:
   replicas: 2
