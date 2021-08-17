@@ -42,9 +42,8 @@ jobs:
 
       - name: Deploy
         run: |-
-          cd manifests
-          ./kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
-          ./kustomize build ./manifests > ./kustomization/manifests.yaml
+          ./manifests edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
+          ./manifests build ./manifests > ./kustomization/manifests.yaml
   
       - name: datree
         run: |-
