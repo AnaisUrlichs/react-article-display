@@ -46,6 +46,7 @@ jobs:
 
       - name: Deploy
         run: |-
+          cd manifests
           ./kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
           ./kustomize build ./manifests > ./kustomization/manifests.yaml
   
@@ -53,5 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     steps:
-      - run: curl https://get.datree.io | /bin/bash
-      - run: datree test ./manifests/manifests.yaml
+      - name: datree
+        run: |-
+          curl https://get.datree.io | /bin/bash
+          datree test ./manifests/manifests.yaml
