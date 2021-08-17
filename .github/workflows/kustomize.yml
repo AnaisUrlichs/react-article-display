@@ -30,7 +30,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/react-example:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
@@ -46,7 +46,7 @@ jobs:
 
       - name: Deploy
         run: |-
-          ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA
+          ./kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
           ./kustomize build ./manifests > ./kustomization/manifests.yaml
   
   check:
