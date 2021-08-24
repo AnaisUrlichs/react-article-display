@@ -1,14 +1,12 @@
 name: Deployment CI
 
-stages:
-  - build
-  - check
-
 on:
   push:
-    branches: [ kustomize ]
+    branches: 
+      - kustomize
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -32,26 +30,22 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/react-example-app:2.0.0
+          tags: ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+  
+      - name: Set up Kustomize
+        run: |-
+          curl --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.2.0/kustomize_v4.2.0_linux_amd64.tar.gz | tar xz
+          chmod u+x ./kustomize
 
-  check:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm run build --if-present
-    - run: npm run test
-    - run: curl https://get.datree.io | /bin/bash
-    - run: datree test ./manifests/manifests.yaml
+      - name: Deploy
+        run: |-
+          sed -i.back "/newTag:/s/:[0-9].*/:4.0.0/g" ./manifests/kustomization.yaml
+          ./kustomize build ./manifests > ./kustomization/manifests.yaml
+  
+      - name: datree
+        run: |-
+          curl https://get.datree.io | /bin/bash
+          datree test ./manifests/manifests.yaml
