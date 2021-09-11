@@ -1,51 +1,31 @@
-name: Deployment CI
+image: docker:latest
+services:
+  - docker:dind
 
-on:
-  push:
-    branches: 
-      - kustomize
+stages:
+  - build
+  - deploy
 
-jobs:
+variables:
+  CONTAINER_IMAGE: anaisurlichs/react-example-app:${CI_COMMIT_SHORT_SHA}
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Out Repo 
-        uses: actions/checkout@v2
+build:
+  stage: build
+  script:
+    - docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
+    - docker build -t ${CONTAINER_IMAGE} .
+    - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}
+    - docker tag ${CONTAINER_IMAGE} anaisurlichs/react-example-app:latest
+    - docker push ${CONTAINER_IMAGE}
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
-
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-  
-      - name: Set up Kustomize
-        run: |-
-          curl --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.2.0/kustomize_v4.2.0_linux_amd64.tar.gz | tar xz
-          chmod u+x ./kustomize
-
-      - name: Deploy
-        run: |-
-          sed -i.back "/newTag:/s/:[0-9].*/:4.0.0/g" ./manifests/kustomization.yaml
-          ./kustomize build ./manifests > ./kustomization/manifests.yaml
-  
-      - name: datree
-        run: |-
-          curl https://get.datree.io | /bin/bash
-          datree test ./manifests/manifests.yaml
+deploy:
+  stage: deploy
+  image: dtzar/helm-kubectl
+  script:
+    - kubectl config set-cluster example-cluster --server="${SERVER}"
+    - kubectl config set-cluster example-cluster --embed-certs --certificate-authority=${CERTIFICATE_AUTHORITY_DATA}
+    - kubectl config set-credentials gitlab --token="${USER_TOKEN}"
+    - kubectl config set-context default --cluster=example-cluster --user=gitlab
+    - kubectl config use-context default
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" manifests/deployment.yaml
+    - kubectl apply -f manifests/deployment.yaml

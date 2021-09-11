@@ -35,6 +35,9 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
   
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Set up Kustomize
         run: |-
           curl --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.2.0/kustomize_v4.2.0_linux_amd64.tar.gz | tar xz
@@ -46,7 +49,11 @@ jobs:
           kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
           kustomize build ./ > ../kustomization/manifests.yaml
   
+  test:
+    runs-on: ubuntu-latest
+    steps:
       - name: datree
         run: |-
+          pwd
           curl https://get.datree.io | /bin/bash
           datree test ./kustomization/manifests.yaml
