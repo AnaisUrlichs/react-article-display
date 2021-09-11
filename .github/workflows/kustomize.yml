@@ -42,10 +42,11 @@ jobs:
 
       - name: Deploy
         run: |-
+          cd ./manifests
           kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
-          kustomize build ./manifests > ./kustomization/manifests.yaml
+          kustomize build ./ > ../kustomization/manifests.yaml
   
       - name: datree
         run: |-
           curl https://get.datree.io | /bin/bash
-          datree test ./manifests/manifests.yaml
+          datree test ./kustomization/manifests.yaml
