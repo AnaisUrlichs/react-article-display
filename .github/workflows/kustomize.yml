@@ -31,7 +31,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/react-example-app:6.0.0
+          tags: ${{ secrets.DOCKER_USERNAME }}/react-example-app:7.0.0
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
@@ -56,7 +56,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |-
           cd manifests
-          kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:6.0.0
+          kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:7.0.0
           cat kustomization.yaml
           kustomize build ./ > ../kustomization/manifests.yaml
           cat ../kustomization/manifests.yaml
