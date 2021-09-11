@@ -31,16 +31,11 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/react-example-app:4.0.0
+          tags: ${{ secrets.DOCKER_USERNAME }}/react-example-app:$GITHUB_SHA
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
   
-      - name: Set up Kustomize
-        run: |-
-          curl --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.2.0/kustomize_v4.2.0_linux_amd64.tar.gz | tar xz
-          chmod u+x ./kustomize
-
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
