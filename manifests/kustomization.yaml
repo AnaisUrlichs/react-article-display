@@ -4,7 +4,7 @@ kind: Kustomization
 
 images:
 - name: anaisurlichs/react-example-app
-  newTag: 822b665bcf2b50da74b1e2e65f0787fa46125d80
+  newTag: 5.0.0
 
 resources:
 - deployment.yaml
