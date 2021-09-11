@@ -47,7 +47,7 @@ jobs:
     continue-on-error: true
     needs: build
 
-      steps:
+    steps:
       - name: Check out code
         uses: actions/checkout@v2
 
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
 
-      steps:
+    steps:
       - name: datree
         run: |-
           curl https://get.datree.io | /bin/bash
