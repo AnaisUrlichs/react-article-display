@@ -59,18 +59,12 @@ jobs:
       - name: Update Kubernetes resources
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        run: |
-        cd manifests
-        kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:$GITHUB_SHA
-        cat kustomization.yaml
-        kustomize build ./ > ../kustomization/manifests.yaml
-        cat ../kustomization/manifests.yaml
-          
-      - name: Commit files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -am "Bump docker tag"
+        run: |-
+          cd manifests
+          kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/react-example-app:$GITHUB_SHA
+          cat kustomization.yaml
+          kustomize build ./ > ../kustomization/manifests.yaml
+          cat ../kustomization/manifests.yaml
 
       - uses: EndBug/add-and-commit@v7
         with:
