@@ -29,7 +29,7 @@ spec:
         run: react-application
     spec:
       containers:
-      - image: anaisurlichs/react-example-app:822b665bcf2b50da74b1e2e65f0787fa46125d80
+      - image: anaisurlichs/react-example-app:5.0.0
         imagePullPolicy: Always
         name: react-application
         ports:
