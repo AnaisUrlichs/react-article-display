@@ -72,8 +72,11 @@ jobs:
     needs: deploy
 
     steps:
-      - name: datree
-        run: |-
-          curl https://get.datree.io | /bin/bash
-          datree test ./kustomization/manifests.yaml
-        continue-on-error: true
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Datree
+        run: curl https://get.datree.io | /bin/bash
+        
+      - name: Run Datree's policy check
+        run: datree test ./kustomization/manifests.yaml
