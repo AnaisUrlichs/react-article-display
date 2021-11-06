@@ -14,7 +14,14 @@ spec:
     spec:
       containers:
       - name: react-application
-        image: anaisurlichs/react-example-app:<VERSION>
+        image: anaisurlichs/react-example-app:7.0.0
         ports:
           - containerPort: 80
         imagePullPolicy: Always
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: 500m
+          requests:
+            memory: 256Mi
+            cpu: 500m
