@@ -6,7 +6,7 @@ FROM node:17-alpine as build-deps
 WORKDIR /usr/src/app
 
 # Copies package.json and package-lock.json to Docker environment
-COPY package.json yarn.lock ./
+COPY package.json ./
  
 # Installs all node packages
 RUN npm install
