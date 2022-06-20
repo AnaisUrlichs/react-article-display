@@ -24,4 +24,3 @@ spec:
             cpu: 200m
         securityContext:
           allowPrivilegeEscalation: false
-
