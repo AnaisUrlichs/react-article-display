@@ -6,25 +6,28 @@ FROM node:17-alpine as build-deps
 WORKDIR /usr/src/app
 
 # Copies package.json and package-lock.json to Docker environment
-COPY package.json ./
+COPY . ./
  
 # Installs all node packages
 RUN npm install
- 
-# Copies everything over to Docker environment
-COPY . ./
 
 # Installs all node packages
 RUN npm run build
 
-# the base image for this is an alpine based nginx image
-FROM nginx:mainline-alpine
+# the base image 
+FROM nginx:alpine
 
-# copy the build folder from react to the root of nginx (www)
-COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
+# specify a user
+USER demo
 
-# expose port 80 to the outer world
-EXPOSE 80
+# Set working directory to nginx asset directory
+WORKDIR /usr/share/nginx/html
 
-# start nginx 
-CMD ["nginx", "-g", "daemon off;"]
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy static assets from builder stage
+COPY --from=build-deps /usr/src/app/build .
+
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
