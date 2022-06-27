@@ -17,9 +17,6 @@ RUN npm run build
 # the base image 
 FROM nginx:alpine
 
-# specify a user
-USER demo
-
 # Set working directory to nginx asset directory
 WORKDIR /usr/share/nginx/html
 

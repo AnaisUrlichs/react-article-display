@@ -1,3 +1,4 @@
+# Demo Application 
 
 ## Project description
 
@@ -5,9 +6,9 @@ This is a simple react project that filters articles from Hacker News. Below, yo
 
 ## Tutorial
 
-This is the final version of the ["Tutorial on Helm Hooks and Codefresh"](https://codefresh.io/helm-tutorial/helm-hooks/)
+This application is referenced in a lot of different tutorials on [AnaisUrlichs](https://github.com/AnaisUrlichs/react-article-display) GitHub repositories.
 
-To learn more about Helm and using Helm in React to build and deploy a Docker image on your Kubernetes cluster follow the tutorial ["Getting started with Helm 3 using React and Codefresh"](https://codefresh.io/helm-tutorial/getting-started-with-helm-3/)
+To get started using this app see below.
 
 ## Running the project
 
@@ -17,4 +18,3 @@ There are multiple ways that you can get started running this project.
 * 'npm install'
 * 'npm start'
 
-Alternatively, [download the Docker image](https://hub.docker.com/repository/docker/anaisurlichs/react-article-display) and run the app via docker

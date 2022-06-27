@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: react-application
-        image: docker.io/anaisurlichs/react-example:0.0.1
+        image: docker.io/anaisurlichs/react-example:0.0.3
         ports:
           - containerPort: 80
         imagePullPolicy: Always
