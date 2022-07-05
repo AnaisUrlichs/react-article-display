@@ -25,8 +25,3 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
           
-      - name: Update Humanitec Image
-        uses: humanitec/build-push-to-humanitec@v1
-        with:
-          humanitec-token: ${{ secrets.HUMANITEC_TOKEN }}
-          organization: aqua-security
