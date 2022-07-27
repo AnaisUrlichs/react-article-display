@@ -18,7 +18,11 @@ jobs:
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@add-support-for-trivy-config
         with:
-          scan-type: 'fs'
-          ignore-unfixed: true
           trivy-config: ./trivy-config.yaml
+          image-ref: 'docker.io/anaisurlichs/react-app:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
           
