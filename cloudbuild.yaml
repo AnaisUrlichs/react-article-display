@@ -23,3 +23,7 @@ steps:
   args: ['build','-f' , 'Dockerfile', '-t', 'us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA', '.']
 images: ['us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA']
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+serviceAccount: 'manikanthpolice18@gmail.com'
