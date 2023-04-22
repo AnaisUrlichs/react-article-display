@@ -16,7 +16,7 @@ steps:
   args:
     - '-c'
     - |
-      SHORT_SHA=$(git rev-parse --short HEAD)
+      SHORT_SHA=$SHORT_SHA
       yq write --inplace /workspace/source/react-article-display/deploy/helm/values.yaml image.tag "$SHORT_SHA"
 
 - name: 'gcr.io/cloud-builders/docker'
