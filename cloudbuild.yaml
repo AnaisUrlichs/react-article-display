@@ -1,0 +1,27 @@
+steps:
+- name: 'gcr.io/cloud-builders/git'
+    args:
+      - 'clone'
+      - '.'
+      - '/workspace/source'
+
+
+- name: 'docker.io/library/alpine:3.14.2'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        apk add --no-cache yq
+
+- name: 'docker.io/library/alpine:3.14.2'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        SHORT_SHA=$(git rev-parse --short HEAD)
+        yq write --inplace /workspace/source/react-article-display/deploy/helm/values.yaml image.tag "$SHORT_SHA"
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build','-f' , 'Dockerfile', '-t', 'us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA', '.']
+images: ['us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA']
+

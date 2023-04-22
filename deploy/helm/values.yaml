@@ -5,7 +5,7 @@
 replicaCount: 2
 
 image:
-  repository: anaisurlichs/react-example
+  repository: us-west2-docker.pkg.dev/tactile-wave-383702/docker-repo/react-app
   tag: 0.0.1
   pullPolicy: IfNotPresent
 
