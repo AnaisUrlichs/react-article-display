@@ -5,7 +5,7 @@ steps:
   - '-c'
   - |
     # git -C /workspace/ --work-tree https://github.com/manikanth1811/react-article-display.git && \
-    ls -ltr 
+    ls -altr 
 
 
 # - name: 'gcr.io/cloud-builders/docker'
