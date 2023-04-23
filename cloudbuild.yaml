@@ -1,11 +1,12 @@
 steps:
 
 - name: 'gcr.io/cloud-builders/git'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        mkdir -p /root/.ssh
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      mkdir -p /root/.ssh
+  
 # Step 1: Generate SSH key pair
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'sh'
