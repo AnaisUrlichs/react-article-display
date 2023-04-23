@@ -26,6 +26,7 @@ steps:
       git config --global user.email manikanthpolice18@gmail.com && \
       git commit -m "Update image tag in values.yaml" && \
       git push origin HEAD:main
+  secretEnv: ['GITHUB_TOKEN']
 
 
 - name: 'gcr.io/cloud-builders/docker'
