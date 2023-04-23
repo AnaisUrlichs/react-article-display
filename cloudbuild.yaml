@@ -11,64 +11,55 @@ steps:
 #     - path: '/root'
   
 # Step 1: Generate SSH key pair
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'sh'
-  args:
-    - '-c'
-    - |
-      ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -N "" -f /some/id_rsa
-  volumes:
-  - name: 'volume'
-  - path: '/some'
+# - name: 'gcr.io/cloud-builders/git'
+#   entrypoint: 'sh'
+#   args:
+#     - '-c'
+#     - |
+#       ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -N "" -f /some/id_rsa
 
-# Step 2: Add SSH key to your GitHub account
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'sh'
-  args:
-    - '-c'
-    - |
-      git config --global user.email "manikanthpolice18@gmail.com"
-      git config --global user.name "Manikanth1811"
-      mkdir -p /root/.ssh
-      echo -e "Host github.com\n\tHostName github.com\n\tIdentityFile /root/.ssh/id_rsa\n" >> /root/.ssh/config
-      ssh-keyscan github.com >> /root/.ssh/known_hosts
-      cat /some/id_rsa >> /root/.ssh/id_rsa.pub
-  volumes:
-    - name: 'volume'
-    - path: '/some'
+
+# # Step 2: Add SSH key to your GitHub account
+# - name: 'gcr.io/cloud-builders/git'
+#   entrypoint: 'sh'
+#   args:
+#     - '-c'
+#     - |
+#       git config --global user.email "manikanthpolice18@gmail.com"
+#       git config --global user.name "Manikanth1811"
+#       mkdir -p /root/.ssh
+#       echo -e "Host github.com\n\tHostName github.com\n\tIdentityFile /root/.ssh/id_rsa\n" >> /root/.ssh/config
+#       ssh-keyscan github.com >> /root/.ssh/known_hosts
+#       cat /some/id_rsa >> /root/.ssh/id_rsa.pub
+#   volumes:
+#     - name: 'volume'
+#     - path: '/some'
 
 # Step 3: Clone repository and push changes
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'sh'
-  args:
-    - '-c'
-    - |
-      git clone git@github.com:manikanth1811/react-article-display.git
+# - name: 'gcr.io/cloud-builders/git'
+#   entrypoint: 'sh'
+#   args:
+#     - '-c'
+#     - |
+#       git clone git@github.com:manikanth1811/react-article-display.git
 
-  volumes:
-    - name: 'volume'
-    - path: '/some'
 
 
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'sh'
   args:
     - '-c'
-    - 'chmod 666 react-article-display/deploy/helm/values.yaml && echo "Changed permissions of values.yaml"'
-  volumes:
-    - name: 'volume'
-    - path: '/some'
+    - 'chmod 666 deploy/helm/values.yaml && echo "Changed permissions of values.yaml"'
+
 
 - name: 'mikefarah/yq'
   entrypoint: sh
   args:
   - '-c'
   - |
-    yq e '.image."tag"' react-article-display/deploy/helm/values.yaml -i && \
+    yq e '.image."tag"' deploy/helm/values.yaml -i && \
     yq e '.image."tag"=$SHORT_SHA'
-  volumes:
-    - name: 'volume'
-    - path: '/some'
+
 
 - name: 'gcr.io/cloud-builders/git'
   args: ['push', 'https://source.developers.google.com/p/$PROJECT_ID/r/react-article-display', 'master']
