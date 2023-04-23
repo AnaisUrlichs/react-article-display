@@ -65,8 +65,7 @@ steps:
   args:
     - '-c'
     - |
-      git config --global user.email "manikanthpolice18@gmail.com"
-      git config --global user.name "Manikanth1811"
+      git add -A
 
 - name: 'gcr.io/cloud-builders/git'
   args: ['push', 'https://github.com/manikanth1811/react-article-display.git', 'main']
