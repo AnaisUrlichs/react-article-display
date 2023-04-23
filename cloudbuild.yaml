@@ -4,28 +4,39 @@ steps:
   args:
   - '-c'
   - |
-    git clone --work-tree=/workspace/ https://github.com/manikanth1811/react-article-display.git
+    git -C /workspace/ --work-tree https://github.com/manikanth1811/react-article-display.git && \
+    ls -ltr 
 
 
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'sh'
-  args:
-    - '-c'
-    - 'chmod 666 /workspace/deploy/helm/values.yaml && echo "Changed permissions of values.yaml"'
+# - name: 'gcr.io/cloud-builders/docker'
+#   entrypoint: 'sh'
+#   args:
+#     - '-c'
+#     - 'chmod 666 /workspace/deploy/helm/values.yaml && echo "Changed permissions of values.yaml"'
 
 
-- name: 'mikefarah/yq'
-  entrypoint: sh
-  args:
-  - '-c'
-  - |
-    yq e '.image."tag"' /workspace/deploy/helm/values.yaml -i && \
-    yq e '.image."tag"=0.1.2'
+# - name: 'mikefarah/yq'
+#   entrypoint: sh
+#   args:
+#   - '-c'
+#   - |
+#     yq e '.image."tag"' /workspace/deploy/helm/values.yaml -i && \
+#     yq e '.image."tag"=0.1.2'
+
+# - name: 'gcr.io/cloud-builders/git'
+#   entrypoint: 'sh'
+#   args:
+#     - '-c'
+#     - |
+#       cd /workspace/ && \
+#       git add deploy/helm/values.yaml && \
+#       git commit -m "Update image tag in values.yaml" && \
+#       git push origin HEAD:main
 
 
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build','-f' , 'Dockerfile', '-t', 'us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA', '.']
-images: ['us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA']
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['build','-f' , 'Dockerfile', '-t', 'us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA', '.']
+# images: ['us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA']
 
 options:
   logging: CLOUD_LOGGING_ONLY
