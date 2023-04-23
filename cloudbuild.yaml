@@ -29,8 +29,8 @@ steps:
     - '-c'
     - |
       git add -A && \
-      git config --global user.name batman && \
-      git config --global user.email batman@gotham.city && \
+      git config --global user.name manikanth1811 && \
+      git config --global user.email manikanthpolice18@gmail.com && \
       git commit -m "Update image tag in values.yaml" && \
       git push origin HEAD:main
 
