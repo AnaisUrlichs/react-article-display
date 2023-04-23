@@ -1,6 +1,17 @@
 steps:
 - name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/manikanth1811/react-article-display.git', 'repo']
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    git clone --work-tree=/workspace/ https://github.com/manikanth1811/react-article-display.git
+
+
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - 'chmod 666 /workspace/deploy/helm/values.yaml && echo "Changed permissions of values.yaml"'
 
 
 - name: 'mikefarah/yq'
@@ -8,7 +19,7 @@ steps:
   args:
   - '-c'
   - |
-    yq e '.image."tag"' deploy/helm/values.yaml -i && \
+    yq e '.image."tag"' /workspace/deploy/helm/values.yaml -i && \
     yq e '.image."tag"=0.1.2'
 
 
