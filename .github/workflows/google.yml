@@ -26,18 +26,11 @@ jobs:
       with:
         credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-    - name: Edit YAML file
-      run: | 
-        sudo apt-get update && sudo apt-get install -yq jq
-        short_sha=$(git rev-parse --short HEAD)
-        yq eval ".image.tag = \"$short_sha\"" -i deploy/helm/values.yaml
-        git config --global user.email "manikanthpolice18@gmail.com"
-        git config --global user.name "manikanth1811"
-        git commit -m "Update YAML file with short hash" 
-        git push
-
-
-
+    - name: Set foobar to cool
+    uses: mikefarah/yq@master
+    with:
+      cmd: yq -i ".image.tag = \"$short_sha\"" deploy/helm/values.yaml
+  
     # Build the Docker image
     - name: Build
       run: |-
