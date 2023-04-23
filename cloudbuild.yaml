@@ -8,7 +8,7 @@ steps:
       mkdir -p /root/.ssh
   volumes:
     - name: 'volume'
-    - path: '/root/'
+    - path: '/root'
   
 # Step 1: Generate SSH key pair
 - name: 'gcr.io/cloud-builders/git'
@@ -19,7 +19,7 @@ steps:
       ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -N "" -f /root/.ssh/id_rsa
   volumes:
   - name: 'volume'
-  - path: '/root/'
+  - path: '/root'
 
 # Step 2: Add SSH key to your GitHub account
 - name: 'gcr.io/cloud-builders/git'
@@ -34,7 +34,7 @@ steps:
       cat /root/.ssh/id_rsa.pub
   volumes:
     - name: 'volume'
-    - path: '/root/'
+    - path: '/root'
 
 # Step 3: Clone repository and push changes
 - name: 'gcr.io/cloud-builders/git'
@@ -46,7 +46,7 @@ steps:
 
   volumes:
     - name: 'volume'
-    - path: '/root/'
+    - path: '/root'
 
 
 - name: 'gcr.io/cloud-builders/docker'
@@ -56,7 +56,7 @@ steps:
     - 'chmod 666 react-article-display/deploy/helm/values.yaml && echo "Changed permissions of values.yaml"'
   volumes:
     - name: 'volume'
-    - path: '/root/'
+    - path: '/root'
 
 - name: 'mikefarah/yq'
   entrypoint: sh
@@ -67,7 +67,7 @@ steps:
     yq e '.image."tag"=$SHORT_SHA'
   volumes:
     - name: 'volume'
-    - path: '/root/'
+    - path: '/root'
 
 
 - name: 'gcr.io/cloud-builders/git'
@@ -82,7 +82,7 @@ steps:
       git push origin master
   volumes:
     - name: 'volume'
-    - path: '/root/'
+    - path: '/root'
 
 
 - name: 'gcr.io/cloud-builders/docker'
