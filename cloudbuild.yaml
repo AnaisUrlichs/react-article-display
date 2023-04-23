@@ -1,42 +1,43 @@
 steps:
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    # git -C /workspace/ --work-tree https://github.com/manikanth1811/react-article-display.git && \
-    ls -altr 
-
-
-# - name: 'gcr.io/cloud-builders/docker'
-#   entrypoint: 'sh'
-#   args:
-#     - '-c'
-#     - 'chmod 666 /workspace/deploy/helm/values.yaml && echo "Changed permissions of values.yaml"'
-
-
-# - name: 'mikefarah/yq'
-#   entrypoint: sh
+# - name: 'gcr.io/cloud-builders/git'
+#   entrypoint: 'bash'
 #   args:
 #   - '-c'
 #   - |
-#     yq e '.image."tag"' /workspace/deploy/helm/values.yaml -i && \
-#     yq e '.image."tag"=0.1.2'
-
-# - name: 'gcr.io/cloud-builders/git'
-#   entrypoint: 'sh'
-#   args:
-#     - '-c'
-#     - |
-#       cd /workspace/ && \
-#       git add deploy/helm/values.yaml && \
-#       git commit -m "Update image tag in values.yaml" && \
-#       git push origin HEAD:main
+#     # git -C /workspace/ --work-tree https://github.com/manikanth1811/react-article-display.git && \
+#     ls -altr 
 
 
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: ['build','-f' , 'Dockerfile', '-t', 'us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA', '.']
-# images: ['us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA']
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - 'chmod 666 deploy/helm/values.yaml && echo "Changed permissions of values.yaml"'
+
+
+- name: 'mikefarah/yq'
+  entrypoint: sh
+  args:
+  - '-c'
+  - |
+    yq e '.image."tag"' deploy/helm/values.yaml -i && \
+    yq e '.image."tag"=0.1.2'
+
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      git add -A && \
+      git config --global user.name batman && \
+      git config --global user.email batman@gotham.city && \
+      git commit -m "Update image tag in values.yaml" && \
+      git push origin HEAD:main
+
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build','-f' , 'Dockerfile', '-t', 'us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA', '.']
+images: ['us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA']
 
 options:
   logging: CLOUD_LOGGING_ONLY
