@@ -63,9 +63,9 @@ jobs:
       - uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
           gcloud_service_key: ${{ secrets.GCP_CREDENTIALS }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
-          registry: gcr.io
-          project_id: my-awesome-project
-          image_name: backend
-          image_tag: latest,v1
-          dockerfile: ./docker/Dockerfile.prod
-          context: ./docker
+          registry: us-west2-docker.pkg.dev
+          project_id: tactile-wave-383702
+          image_name: docker-repo/react-app
+          image_tag: latest
+          dockerfile: Dockerfile
+          context: .
