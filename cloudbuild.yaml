@@ -60,6 +60,13 @@ steps:
     yq e '.image."tag"' deploy/helm/values.yaml -i && \
     yq e '.image."tag"=$SHORT_SHA'
 
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      git config --global user.email "manikanthpolice18@gmail.com"
+      git config --global user.name "Manikanth1811"
 
 - name: 'gcr.io/cloud-builders/git'
   args: ['push', 'https://github.com/manikanth1811/react-article-display.git', 'main']
