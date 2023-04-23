@@ -61,7 +61,7 @@ images: ['us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA']
 options:
   logging: CLOUD_LOGGING_ONLY
 
-serviceAccount: '299138380108-compute@developer.gserviceaccount.com'
+serviceAccount: '299138380108@cloudbuild.gserviceaccount.com'
 
 
 # steps:
