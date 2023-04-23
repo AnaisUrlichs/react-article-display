@@ -23,8 +23,6 @@ steps:
     - '-c'
     - |
       export GIT_TOKEN=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
-      # git config --global user.name manikanth1811
-      # git config --global user.email manikanthpolice18@gmail.com
       git add -A
       git commit -m "Updated with build ${BUILD_ID} from ${REPO_NAME} commit ${COMMIT_SHA}"
       git push origin master
