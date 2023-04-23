@@ -13,7 +13,7 @@ jobs:
     environment: production
 
     permissions:
-      contents: 'read'
+      contents: 'read','write'
       id-token: 'write'
 
     steps:
@@ -31,6 +31,9 @@ jobs:
     with:
       cmd: yq -i ".image.tag = \"$short_sha\"" deploy/helm/values.yaml
   
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: new version
     # Build the Docker image
     - name: Build
       run: |-
