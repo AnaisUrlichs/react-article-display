@@ -70,20 +70,22 @@ steps:
     - name: 'volume'
     - path: '/some'
 
+name: 'gcr.io/cloud-builders/git'
+  args: ['push', 'https://source.developers.google.com/p/$PROJECT_ID/r/$REPO', 'master']
 
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      export GIT_TOKEN=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
-      cd react-article-display/
-      git add -A
-      git commit -m "Updated with build ${BUILD_ID} from ${REPO_NAME} commit ${COMMIT_SHA}"
-      git push origin master
-  volumes:
-    - name: 'volume'
-    - path: '/some'
+# - name: 'gcr.io/cloud-builders/git'
+#   entrypoint: 'bash'
+#   args:
+#     - '-c'
+#     - |
+#       export GIT_TOKEN=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
+#       cd react-article-display/
+#       git add -A
+#       git commit -m "Updated with build ${BUILD_ID} from ${REPO_NAME} commit ${COMMIT_SHA}"
+#       git push origin master
+#   volumes:
+#     - name: 'volume'
+#     - path: '/some'
 
 
 - name: 'gcr.io/cloud-builders/docker'
