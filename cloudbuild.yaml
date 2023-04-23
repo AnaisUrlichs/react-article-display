@@ -1,14 +1,14 @@
 steps:
 
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'sh'
-  args:
-    - '-c'
-    - |
-      mkdir -p /root/.ssh
-  volumes:
-    - name: 'volume'
-    - path: '/root'
+# - name: 'gcr.io/cloud-builders/git'
+#   entrypoint: 'sh'
+#   args:
+#     - '-c'
+#     - |
+#       mkdir -p /root/.ssh
+#   volumes:
+#     - name: 'volume'
+#     - path: '/root'
   
 # Step 1: Generate SSH key pair
 - name: 'gcr.io/cloud-builders/git'
@@ -16,10 +16,10 @@ steps:
   args:
     - '-c'
     - |
-      ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -N "" -f /root/.ssh/id_rsa
+      ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -N "" -f /some/id_rsa
   volumes:
   - name: 'volume'
-  - path: '/root'
+  - path: '/some'
 
 # Step 2: Add SSH key to your GitHub account
 - name: 'gcr.io/cloud-builders/git'
@@ -29,12 +29,13 @@ steps:
     - |
       git config --global user.email "manikanthpolice18@gmail.com"
       git config --global user.name "Manikanth1811"
+      mkdir -p /root/.ssh
       echo -e "Host github.com\n\tHostName github.com\n\tIdentityFile /root/.ssh/id_rsa\n" >> /root/.ssh/config
       ssh-keyscan github.com >> /root/.ssh/known_hosts
-      cat /root/.ssh/id_rsa.pub
+      cat /some/id_rsa >> /root/.ssh/id_rsa.pub
   volumes:
     - name: 'volume'
-    - path: '/root'
+    - path: '/some'
 
 # Step 3: Clone repository and push changes
 - name: 'gcr.io/cloud-builders/git'
@@ -46,7 +47,7 @@ steps:
 
   volumes:
     - name: 'volume'
-    - path: '/root'
+    - path: '/some'
 
 
 - name: 'gcr.io/cloud-builders/docker'
@@ -56,7 +57,7 @@ steps:
     - 'chmod 666 react-article-display/deploy/helm/values.yaml && echo "Changed permissions of values.yaml"'
   volumes:
     - name: 'volume'
-    - path: '/root'
+    - path: '/some'
 
 - name: 'mikefarah/yq'
   entrypoint: sh
@@ -67,7 +68,7 @@ steps:
     yq e '.image."tag"=$SHORT_SHA'
   volumes:
     - name: 'volume'
-    - path: '/root'
+    - path: '/some'
 
 
 - name: 'gcr.io/cloud-builders/git'
@@ -82,7 +83,7 @@ steps:
       git push origin master
   volumes:
     - name: 'volume'
-    - path: '/root'
+    - path: '/some'
 
 
 - name: 'gcr.io/cloud-builders/docker'
