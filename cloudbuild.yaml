@@ -1,7 +1,7 @@
 steps:
 
 # Step 1: Generate SSH key pair
-- name: 'gcr.io/cloud-builders/ssh'
+- name: 'gcr.io/cloud-builders/git'
   entrypoint: 'sh'
   args:
     - '-c'
