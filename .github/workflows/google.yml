@@ -21,7 +21,7 @@ jobs:
       - name: Set foobar to cool
         uses: mikefarah/yq@master
         with:
-          cmd: yq -i ".image.tag = '\''$short_sha'\''" deploy/helm/values.yaml
+          cmd: "yq -i \".image.tag = '$short_sha'\" deploy/helm/values.yaml"
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: new version
