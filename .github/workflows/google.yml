@@ -56,7 +56,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
       - name: Replace tag with GitHub SHA
-        run: yq eval -i '.image.tag = latest' deploy/helm/values.yaml
+        run: yq -i '.image.tag = "latest"' deploy/helm/values.yaml
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: new version
