@@ -15,28 +15,6 @@ steps:
     yq e '.image."tag"' deploy/helm/values.yaml -i && \
     yq e '.image."tag"=$SHORT_SHA'
 
-- name: gcr.io/cloud-builders/gcloud
-  entrypoint: 'bash'
-  args: [ '-c', 'cat ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDmJRpj+K0fiR6NK1yTAMYADjig53GhVOmtpgnfZ6xub6VV8fvzCQFn/cYueZyFPx4rVon7QHQADsFuewEmIz9GhU2zqvhTD2p8EZ7tNdYMTF26AGlBq8yUdKg6EjBxOnjAMJpXth8Zrv2Vza5QpnYDGtTGkD93HHsqfSGkvQZq+KmQXYZsR/eNVkF1OHANaI7pKWCbE0TYlQZagM4DwyOO/wISTMNIkWxnGDl61Om+88kTutTgDLqLUYy4BkQrYz6m5/L2XV6N4M6kIop6SilIw3SqVuyHDEwXGIeH75BnOYFPquCTnIYnEronwNLYFIj3D8XxbX2EkaBOQZGmqVwcexmKGyUpIq4eeMbXKy+fkUAGQS/usM1TnusqWleeDJ7jusJeusUCVAHq4X4jyz9sIs9WOXkMDT9H+G0HHkS6W9G7VNb5XykFj0L9ePMLeKeIm19obz+2+850f9XTTg92/WmxgINCMAPfdXKxDN/jpWjScEDoGIx+1Bk/2PiRLhO1rzQDsF0vaAKvHZb9haR8j7WFN9YoGR6CgToCgc9Fra70Z2p6Mfs6MT1dRj6jJM8+QAmTH7052YIFlXrDqyHENkIngVozlRJnSp9ebpQtj+wwyqkkIOj9IzYyC9TA3gGEwz1JfsQ08mR2uPerAG0od9+m8TwcJrN97t2H0LYPoQ== your_email@example.com > /root/.ssh/id_github' ]
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
-
-# Set up git with key and domain
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    chmod 600 /root/.ssh/id_github
-    cat <<EOF >/root/.ssh/config
-    Hostname github.com
-    IdentityFile /root/.ssh/id_github
-    EOF
-    ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
 
 
 - name: 'gcr.io/cloud-builders/git'
@@ -44,14 +22,13 @@ steps:
   args:
     - '-c'
     - |
+      export GIT_TOKEN=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
       git config --global user.name manikanth1811
       git config --global user.email manikanthpolice18@gmail.com
       git add -A
       git commit -m "Updated with build ${BUILD_ID} from ${REPO_NAME} commit ${COMMIT_SHA}"
       git push origin master
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
+
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build','-f' , 'Dockerfile', '-t', 'us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA', '.']
