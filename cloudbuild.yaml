@@ -17,7 +17,7 @@ steps:
 
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
-  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh > /root/.ssh/id_github' ]
+  args: [ '-c', 'cat ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDmJRpj+K0fiR6NK1yTAMYADjig53GhVOmtpgnfZ6xub6VV8fvzCQFn/cYueZyFPx4rVon7QHQADsFuewEmIz9GhU2zqvhTD2p8EZ7tNdYMTF26AGlBq8yUdKg6EjBxOnjAMJpXth8Zrv2Vza5QpnYDGtTGkD93HHsqfSGkvQZq+KmQXYZsR/eNVkF1OHANaI7pKWCbE0TYlQZagM4DwyOO/wISTMNIkWxnGDl61Om+88kTutTgDLqLUYy4BkQrYz6m5/L2XV6N4M6kIop6SilIw3SqVuyHDEwXGIeH75BnOYFPquCTnIYnEronwNLYFIj3D8XxbX2EkaBOQZGmqVwcexmKGyUpIq4eeMbXKy+fkUAGQS/usM1TnusqWleeDJ7jusJeusUCVAHq4X4jyz9sIs9WOXkMDT9H+G0HHkS6W9G7VNb5XykFj0L9ePMLeKeIm19obz+2+850f9XTTg92/WmxgINCMAPfdXKxDN/jpWjScEDoGIx+1Bk/2PiRLhO1rzQDsF0vaAKvHZb9haR8j7WFN9YoGR6CgToCgc9Fra70Z2p6Mfs6MT1dRj6jJM8+QAmTH7052YIFlXrDqyHENkIngVozlRJnSp9ebpQtj+wwyqkkIOj9IzYyC9TA3gGEwz1JfsQ08mR2uPerAG0od9+m8TwcJrN97t2H0LYPoQ== your_email@example.com > /root/.ssh/id_github' ]
   volumes:
   - name: 'ssh'
     path: /root/.ssh
