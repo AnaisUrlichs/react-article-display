@@ -62,7 +62,7 @@ steps:
 
 
 - name: 'gcr.io/cloud-builders/git'
-  args: ['push', 'https://source.developers.google.com/p/$PROJECT_ID/r/react-article-display', 'master']
+  args: ['push', 'https://github.com/manikanth1811/react-article-display.git', 'main']
 
 # - name: 'gcr.io/cloud-builders/git'
 #   entrypoint: 'bash'
