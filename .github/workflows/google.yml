@@ -1,47 +1,36 @@
-
 name: Build and Deploy to GKE
-
 on:
   push:
-    branches: [ "main" ]
-
-
+    branches:
+      - main
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
     environment: production
-
     permissions:
-      contents: 'read','write'
-      id-token: 'write'
-
+      contents: write
+      id-token: write
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-#     Alternative option - authentication via credentials json
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v0'
-      with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-
-    - name: Set foobar to cool
-    uses: mikefarah/yq@master
-    with:
-      cmd: yq -i ".image.tag = \"$short_sha\"" deploy/helm/values.yaml
-  
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: new version
-    # Build the Docker image
-    - name: Build
-      run: |-
-        docker build \
-          --tag "us-west2-docker.pkg.dev/tactile-wave-383702/docker-repo/react-app:$GITHUB_SHA" \
-          --build-arg GITHUB_SHA="$GITHUB_SHA" \
-          .
-    # Push the Docker image to Google Artifact Registry
-    - name: Publish
-      run: |-
-        docker push "us-west2-docker.pkg.dev/tactile-wave-383702/docker-repo/react-app:$GITHUB_SHA"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - id: auth
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - name: Set foobar to cool
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq -i ".image.tag = \"$short_sha\"" deploy/helm/values.yaml
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: new version
+      - name: Build
+        run: >-
+          docker build \
+            --tag "us-west2-docker.pkg.dev/tactile-wave-383702/docker-repo/react-app:$GITHUB_SHA" \
+            --build-arg GITHUB_SHA="$GITHUB_SHA" \
+            .
+      - name: Publish
+        run: docker push
+          "us-west2-docker.pkg.dev/tactile-wave-383702/docker-repo/react-app:$GITHUB_SHA"
