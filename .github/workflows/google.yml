@@ -18,10 +18,8 @@ jobs:
         uses: google-github-actions/auth@v0
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-      - name: Set foobar to cool
-        uses: mikefarah/yq@master
-        with:
-          cmd: "yq -i \".image.tag = '$short_sha'\" deploy/helm/values.yaml"
+      - name: Replace tag with GitHub SHA
+        run: sed -i "s/tag:.*/tag: ${{ github.sha }}/g" deploy/helm/values.yaml
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: new version
