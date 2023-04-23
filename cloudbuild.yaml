@@ -1,12 +1,17 @@
 steps:
 
+- name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        mkdir -p /root/.ssh
 # Step 1: Generate SSH key pair
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'sh'
   args:
     - '-c'
     - |
-      mkdir -p /root/.ssh
       ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -N "" -f /root/.ssh/id_rsa
 
 # Step 2: Add SSH key to your GitHub account
