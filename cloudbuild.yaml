@@ -15,28 +15,48 @@ steps:
     yq e '.image."tag"' deploy/helm/values.yaml -i && \
     yq e '.image."tag"=$SHORT_SHA'
 
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > /root/.ssh/id_github' ]
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Set up git with key and domain
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    chmod 600 /root/.ssh/id_github
+    cat <<EOF >/root/.ssh/config
+    Hostname github.com
+    IdentityFile /root/.ssh/id_github
+    EOF
+    ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'bash'
   args:
     - '-c'
     - |
-      export GIT_TOKEN=$$GITHUB_TOKEN
-      git add -A && \
-      git config --global user.name manikanth1811 && \
-      git config --global user.email manikanthpolice18@gmail.com && \
-      git commit -m "Update image tag in values.yaml" && \
-      git push origin HEAD:main
-  secretEnv: ['GITHUB_TOKEN']
-
+      git config --global user.name manikanth1811
+      git config --global user.email manikanthpolice18@gmail.com
+      git add -A
+      git commit -m "Updated with build ${BUILD_ID} from ${REPO_NAME} commit ${COMMIT_SHA}"
+      git push origin master
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build','-f' , 'Dockerfile', '-t', 'us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA', '.']
 images: ['us-west2-docker.pkg.dev/$PROJECT_ID/docker-repo/react-app:$SHORT_SHA']
 
-availableSecrets:
-  secretManager:
-  - versionName: projects/299138380108/secrets/GITHUB_TOKEN/versions/1
-    env: 'GITHUB_TOKEN'
 
 options:
   logging: CLOUD_LOGGING_ONLY
