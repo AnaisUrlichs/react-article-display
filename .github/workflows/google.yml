@@ -1,39 +1,3 @@
-# name: Build and Deploy to GKE
-# on:
-#   push:
-#     branches:
-#       - main
-# jobs:
-#   setup-build-publish-deploy:
-#     name: Setup, Build, Publish, and Deploy
-#     runs-on: ubuntu-latest
-#     environment: production
-#     permissions:
-#       contents: write
-#       id-token: write
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
-#       - id: auth
-#         uses: google-github-actions/auth@v0
-#         with:
-#           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-#       - name: Replace tag with GitHub SHA
-#         run: sed -i "s/tag:.*/tag: ${{ github.sha }}/g" deploy/helm/values.yaml
-#       - uses: stefanzweifel/git-auto-commit-action@v4
-#         with:
-#           commit_message: new version
-#       - name: Build
-#         run: >-
-#           docker build \
-#             --tag "us-west2-docker.pkg.dev/tactile-wave-383702/docker-repo/react-app:$GITHUB_SHA" \
-#             --build-arg GITHUB_SHA="$GITHUB_SHA" \
-#             .
-#       - name: Publish
-#         run: docker push
-#           "us-west2-docker.pkg.dev/tactile-wave-383702/docker-repo/react-app:$GITHUB_SHA"
-
-
 name: Build and Deploy to GKE
 on:
   push:
@@ -51,19 +15,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # - id: auth
-      #   uses: google-github-actions/auth@v0
-      #   with:
-      #     credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-      # - name: Replace tag with GitHub SHA
-      #   run: yq -i '.image.tag = "latest"' deploy/helm/values.yaml
-      # - uses: stefanzweifel/git-auto-commit-action@v4
-      #   with:
-      #     commit_message: new version
       - uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
-          gcloud_service_key: ${{ secrets.GCP_CREDENTIALS }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
-          registry: us-west2-docker.pkg.dev
+          gcloud_service_key: ${{ secrets.GCP_CREDENTIALS }} 
           project_id: tactile-wave-383702
           image_name: docker-repo/react-app
           image_tag: latest
