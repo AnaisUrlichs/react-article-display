@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-application
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: react-application
+  template:
+    metadata:
+      labels:
+        run: react-application
+    spec:
+      containers:
+      - name: react-application
+        image: anaisurlichs/react-article-display:master
+        ports:
+          - containerPort: 80
+        imagePullPolicy: Always
